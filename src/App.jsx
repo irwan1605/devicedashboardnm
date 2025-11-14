@@ -1,16 +1,22 @@
 import React, { useState, useEffect } from "react";
 import DeviceDashboard from "./pages/DeviceDashboard";
-import { BsMoon, BsSun } from "react-icons/bs";
-// ✅ Gunakan path absolut ke folder public (tanpa import)
+import { BsMoon, BsSun, BsSearch } from "react-icons/bs";
+
+// Gunakan logo dari public folder (tanpa import)
 const logo = "/Logo_Pusident.png";
 
 export default function App() {
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", theme === "dark");
     localStorage.setItem("theme", theme);
   }, [theme]);
+
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
 
   return (
     <div
@@ -26,7 +32,7 @@ export default function App() {
           theme === "dark" ? "bg-gray-800" : "bg-white"
         }`}
       >
-        {/* Logo */}
+        {/* === LEFT SIDE (Logo + Title) === */}
         <div className="flex items-center gap-3">
           <img
             src={logo}
@@ -38,19 +44,42 @@ export default function App() {
           </h1>
         </div>
 
-        {/* Theme Toggle Button */}
-        <button
-          onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-          className="flex items-center gap-2 border px-3 py-2 rounded-lg hover:scale-105 transition-all duration-300"
-        >
-          {theme === "dark" ? <BsSun size={18} /> : <BsMoon size={18} />}
-          {theme === "dark" ? "Light Mode" : "Dark Mode"}
-        </button>
+        {/* === RIGHT SIDE (Search + Theme Toggle) === */}
+        <div className="flex items-center gap-4">
+          {/* SEARCH BAR */}
+          <div className="relative w-52 sm:w-64 md:w-72 lg:w-80">
+            <BsSearch
+              className={`absolute left-3 top-2.5 ${
+                theme === "dark" ? "text-gray-400" : "text-gray-500"
+              }`}
+            />
+            <input
+              type="text"
+              value={searchTerm}
+              onChange={handleSearchChange}
+              placeholder="Search devices..."
+              className={`w-full pl-9 pr-3 py-2 rounded-lg border focus:outline-none focus:ring-2 text-sm transition-all duration-300 ${
+                theme === "dark"
+                  ? "bg-gray-700 border-gray-600 text-gray-200 focus:ring-blue-400"
+                  : "bg-white border-gray-300 text-gray-800 focus:ring-blue-500"
+              }`}
+            />
+          </div>
+
+          {/* THEME TOGGLE */}
+          <button
+            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+            className="flex items-center gap-2 border px-3 py-2 rounded-lg hover:scale-105 transition-all duration-300"
+          >
+            {theme === "dark" ? <BsSun size={18} /> : <BsMoon size={18} />}
+            {theme === "dark" ? "Light Mode" : "Dark Mode"}
+          </button>
+        </div>
       </header>
 
-      {/* === MAIN === */}
+      {/* === MAIN CONTENT === */}
       <main className="flex-1 p-4 md:p-6 overflow-y-auto">
-        <DeviceDashboard />
+        <DeviceDashboard searchTerm={searchTerm} />
       </main>
 
       {/* === FOOTER === */}
