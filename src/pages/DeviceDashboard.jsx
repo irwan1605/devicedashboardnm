@@ -145,7 +145,7 @@ export default function DeviceDashboard({ searchTerm = "" }) {
 
   // offices list (sample)
   const offices = [
-    "Polda Metro Jaya",
+    "Polda Aceh",
     "Polda Jabar",
     "Polda Jatim",
     "Polda Jateng",
@@ -154,7 +154,7 @@ export default function DeviceDashboard({ searchTerm = "" }) {
     "Polda Sumbar",
     "Polda Riau",
     "Polda Sumsel",
-    "Polda Aceh",
+    "Polda Metro Jaya",
     "Polda Kalbar",
     "Polda Kalsel",
     "Polda Kaltim",
